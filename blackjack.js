@@ -67,8 +67,8 @@ class CardPlayer {
 };
 
 // CREATE TWO NEW CardPlayers
-const dealer = new CardPlayer("dealer 1");
-const player = new CardPlayer("player 1");
+const dealer = new CardPlayer("Dealer");
+const player = new CardPlayer("Player");
 
 /**
  * Calculates the score of a Blackjack hand
@@ -79,7 +79,17 @@ const player = new CardPlayer("player 1");
  */
 const calcPoints = (hand) => {
   // CREATE FUNCTION HERE
-  
+  let total = 0;
+  let isSoft = false;
+  const blackJackScore = {
+    total: 0,
+    isSoft: false
+  };
+
+  const filteredAces = hand.filter(card => card.displayVal === "Ace" && card.val === 11);
+  console.log(filteredAces);
+
+  return blackJackScore;
 }
 
 /**
