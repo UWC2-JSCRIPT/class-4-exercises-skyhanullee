@@ -1,3 +1,50 @@
+// use the getDeck() function from createCardDeck()
+const getDeck = () => {
+  const suits = ['hearts', 'spades', 'clubs', 'diamonds'];
+  const cards = [];
+
+  for(let i = 0; i < suits.length; i++) {
+    for(let j = 1; j <= 13; j++) {
+      let val = "";
+      let valName = "";
+      let card;
+
+      switch(true) {
+        case j === 1:
+          valName = "Ace";
+          break;
+        case j > 1 && j <= 10:
+          valName = j;
+          val = j;
+          break;
+        case j == 11:
+          valName = "Jack";
+          break;
+        case j == 12:
+          valName = "Queen";
+          break;
+        case j == 13:
+          valName = "King";
+          break;
+        default:
+          break;
+      }
+      card = {
+        val: j,
+        displayVal: valName,
+        suit: suits[i],
+      };
+
+      if(valName === "Ace") {
+        card.val = 11;
+      }
+
+      cards.push(card);
+    }
+  }
+  return cards;
+}
+
 const blackjackDeck = getDeck();
 
 /**
@@ -5,11 +52,23 @@ const blackjackDeck = getDeck();
  * @constructor
  * @param {string} name - The name of the player
  */
-class CardPlayer {}; //TODO
+class CardPlayer {
+  constructor(name) {
+    this.name = name;
+    this.hand = [];
+  }
+
+  drawCard() {
+    const deck = getDeck();
+    const randomCard = deck[Math.floor(Math.random() * 52)];
+    this.hand.push(randomCard);
+  }
+
+};
 
 // CREATE TWO NEW CardPlayers
-const dealer; // TODO
-const player; // TODO
+const dealer = new CardPlayer("dealer 1");
+const player = new CardPlayer("player 1");
 
 /**
  * Calculates the score of a Blackjack hand
@@ -20,7 +79,7 @@ const player; // TODO
  */
 const calcPoints = (hand) => {
   // CREATE FUNCTION HERE
-
+  
 }
 
 /**
