@@ -1,3 +1,50 @@
+// use the getDeck() function from createCardDeck()
+const getDeck = () => {
+  const suits = ['hearts', 'spades', 'clubs', 'diamonds'];
+  const cards = [];
+
+  for(let i = 0; i < suits.length; i++) {
+    for(let j = 1; j <= 13; j++) {
+      let val = "";
+      let valName = "";
+      let card;
+
+      switch(true) {
+        case j === 1:
+          valName = "Ace";
+          break;
+        case j > 1 && j <= 10:
+          valName = j;
+          val = j;
+          break;
+        case j == 11:
+          valName = "Jack";
+          break;
+        case j == 12:
+          valName = "Queen";
+          break;
+        case j == 13:
+          valName = "King";
+          break;
+        default:
+          break;
+      }
+      card = {
+        val: j,
+        displayVal: valName,
+        suit: suits[i],
+      };
+
+      if(valName === "Ace") {
+        card.val = 11;
+      }
+
+      cards.push(card);
+    }
+  }
+  return cards;
+}
+
 const blackjackDeck = getDeck();
 
 /**
@@ -5,11 +52,23 @@ const blackjackDeck = getDeck();
  * @constructor
  * @param {string} name - The name of the player
  */
-class CardPlayer {}; //TODO
+class CardPlayer {
+  constructor(name) {
+    this.name = name;
+    this.hand = [];
+  }
+
+  drawCard() {
+    const deck = getDeck();
+    const randomCard = deck[Math.floor(Math.random() * 52)];
+    this.hand.push(randomCard);
+  }
+
+};
 
 // CREATE TWO NEW CardPlayers
-const dealer; // TODO
-const player; // TODO
+const dealer = new CardPlayer("Dealer");
+const player = new CardPlayer("Player");
 
 /**
  * Calculates the score of a Blackjack hand
@@ -20,7 +79,34 @@ const player; // TODO
  */
 const calcPoints = (hand) => {
   // CREATE FUNCTION HERE
+  let handTotal = 0;
+  let handIsSoft = false;
+  const blackJackScore = {
+    total: 0,
+    isSoft: false
+  };
 
+  // check if there are aces in hand
+  const filteredAces = hand.filter(card => card.displayVal === "Ace" && card.val === 11);
+  console.log(filteredAces);
+
+  // if only 1 ace
+  if(filteredAces.length == 1) {
+    handIsSoft = true;
+  }
+  // if more than 1 ace
+  else if(filteredAces.length > 1) {
+    handIsSoft = true;
+    // change ace card value to 1
+    for(let i = 1; i < filteredAces.length; i++) {
+      card[i].val = 1;
+    }
+  }
+
+  blackJackScore.total = handTotal;
+  blackJackScore.isSoft = handIsSoft;
+
+  return blackJackScore;
 }
 
 /**
@@ -41,8 +127,7 @@ const dealerShouldDraw = (dealerHand) => {
  * @returns {string} Shows the player's score, the dealer's score, and who wins
  */
 const determineWinner = (playerScore, dealerScore) => {
-  // CREATE FUNCTION HERE
-
+  return (playerScore === dealerScore ? "It's a tie." : playerScore > dealerScore ? `Winner is ${playerScore}` : `Winner is ${dealerScore}`);
 }
 
 /**
