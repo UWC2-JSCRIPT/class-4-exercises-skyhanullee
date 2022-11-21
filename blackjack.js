@@ -182,7 +182,7 @@ const startGame = function() {
   player.drawCard();
   dealer.drawCard();
   
-
+  // to allow program to work in node.js
   const readline = require("readline");
   const rl = readline.createInterface({
       input: process.stdin,
