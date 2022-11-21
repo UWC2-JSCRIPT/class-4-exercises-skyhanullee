@@ -19,12 +19,15 @@ const getDeck = () => {
           break;
         case j == 11:
           valName = "Jack";
+          val = 10;
           break;
         case j == 12:
           valName = "Queen";
+          val = 10;
           break;
         case j == 13:
           valName = "King";
+          val = 10;
           break;
         default:
           break;
@@ -87,8 +90,9 @@ const calcPoints = (hand) => {
   };
 
   // check if there are aces in hand
-  const filteredAces = hand.filter(card => card.displayVal === "Ace" && card.val === 11);
-  console.log(`This is number of filtered Aces ${filteredAces}`);
+  let filteredAces = hand.filter((card) => (card.displayVal === "Ace") && (card.val === 11));
+  
+  console.log(`This is number of filtered Aces ${filteredAces.length}`);
 
   // if only 1 ace
   if(filteredAces.length == 1) {
@@ -99,8 +103,12 @@ const calcPoints = (hand) => {
     handIsSoft = true;
     // change ace card value to 1
     for(let i = 1; i < filteredAces.length; i++) {
-      card[i].val = 1;
+      filteredAces[i].val = 1;
     }
+  }
+
+  for(card of hand) {
+    handTotal += card.val;
   }
 
   blackJackScore.total = handTotal;
@@ -173,14 +181,27 @@ const startGame = function() {
   dealer.drawCard();
   player.drawCard();
   dealer.drawCard();
+  
+
+  const readline = require("readline");
+  const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+  });
+
 
   let playerScore = calcPoints(player.hand).total;
   showHand(player);
-  while (playerScore < 21 && confirm(getMessage(playerScore, dealer.hand[0]))) {
+  while (playerScore < 21 && rl.question(getMessage(playerScore, dealer.hand[0]))) {
     player.drawCard();
     playerScore = calcPoints(player.hand).total;
     showHand(player);
   }
+  // while (playerScore < 21 && confirm(getMessage(playerScore, dealer.hand[0]))) {
+  //   player.drawCard();
+  //   playerScore = calcPoints(player.hand).total;
+  //   showHand(player);
+  // }
   if (playerScore > 21) {
     return 'You went over 21 - you lose!';
   }
