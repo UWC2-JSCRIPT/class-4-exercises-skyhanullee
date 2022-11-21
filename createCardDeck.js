@@ -2,7 +2,7 @@
  * Returns an array of 52 Cards
  * @returns {Array} deck - a deck of cards
  */
-const getDeck = () => {
+ const getDeck = () => {
   const suits = ['hearts', 'spades', 'clubs', 'diamonds'];
   const cards = [];
 
@@ -22,12 +22,15 @@ const getDeck = () => {
           break;
         case j == 11:
           valName = "Jack";
+          val = 10;
           break;
         case j == 12:
           valName = "Queen";
+          val = 10;
           break;
         case j == 13:
           valName = "King";
+          val = 10;
           break;
         default:
           break;
@@ -47,6 +50,7 @@ const getDeck = () => {
   }
   return cards;
 }
+
 
 
 // CHECKS
