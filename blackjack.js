@@ -88,7 +88,7 @@ const calcPoints = (hand) => {
 
   // check if there are aces in hand
   const filteredAces = hand.filter(card => card.displayVal === "Ace" && card.val === 11);
-  console.log(filteredAces);
+  console.log(`This is number of filtered Aces ${filteredAces}`);
 
   // if only 1 ace
   if(filteredAces.length == 1) {
@@ -117,7 +117,24 @@ const calcPoints = (hand) => {
  */
 const dealerShouldDraw = (dealerHand) => {
   // CREATE FUNCTION HERE
+  let total = 0;
 
+  // calc total
+  for(card of dealerHand) {
+    total += card.val;
+  }
+  // if dealer less than 16 points, should draw
+  if(total < 16) {
+    return true;
+  }
+  // if dealer equal 17 points, check for ace
+  if(total == 17) {
+
+    return true;
+  }
+
+  // by default: dealer higher than 17, hold and no draw
+  return false;
 }
 
 /**
@@ -182,4 +199,4 @@ const startGame = function() {
 
   return determineWinner(playerScore, dealerScore);
 }
-// console.log(startGame());
+console.log(startGame());
