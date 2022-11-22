@@ -173,10 +173,10 @@ const showHand = (player) => {
   console.log(`${player.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.hand).total})`);
   
   // my attempt to display as HTML on the page
-  let blackjackList = document.querySelector('.blackjack');
-  let blackjackItems = '';
-  blackjackItems += '<li>' + `${player.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.hand).total})` + '</li>';
-  blackjackList.innerHTML = blackjackItems;
+  // let blackjackList = document.querySelector('.blackjack');
+  // let blackjackItems = '';
+  // blackjackItems += '<li>' + `${player.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.hand).total})` + '</li>';
+  // blackjackList.innerHTML = blackjackItems;
 }
 
 /**
@@ -189,11 +189,11 @@ const startGame = function() {
   dealer.drawCard();
   
   // to allow program to work in node.js
-  const readline = require("readline");
-  const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-  });
+  // const readline = require("readline");
+  // const rl = readline.createInterface({
+  //     input: process.stdin,
+  //     output: process.stdout
+  // });
 
 
   let playerScore = calcPoints(player.hand).total;
@@ -204,16 +204,18 @@ const startGame = function() {
   }
 
   showHand(player);
-  while (playerScore < 21 && rl.question(getMessage(playerScore, dealer.hand[0]))) {
-    player.drawCard();
-    playerScore = calcPoints(player.hand).total;
-    showHand(player);
-  }
-  // while (playerScore < 21 && confirm(getMessage(playerScore, dealer.hand[0]))) {
+
+  // used to run in node.js
+  // while (playerScore < 21 && rl.question(getMessage(playerScore, dealer.hand[0]))) {
   //   player.drawCard();
   //   playerScore = calcPoints(player.hand).total;
   //   showHand(player);
   // }
+  while (playerScore < 21 && confirm(getMessage(playerScore, dealer.hand[0]))) {
+    player.drawCard();
+    playerScore = calcPoints(player.hand).total;
+    showHand(player);
+  }
   if (playerScore > 21) {
     return 'You went over 21 - you lose!';
   }
