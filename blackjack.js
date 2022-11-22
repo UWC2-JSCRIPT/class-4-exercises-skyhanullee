@@ -171,6 +171,12 @@ const getMessage = (count, dealerCard) => {
 const showHand = (player) => {
   const displayHand = player.hand.map((card) => card.displayVal);
   console.log(`${player.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.hand).total})`);
+  
+  // my attempt to display as HTML on the page
+  let blackjackList = document.querySelector('.blackjack');
+  let blackjackItems = '';
+  blackjackItems += '<li>' + `${player.name}'s hand is ${displayHand.join(', ')} (${calcPoints(player.hand).total})` + '</li>';
+  blackjackList.innerHTML = blackjackItems;
 }
 
 /**
@@ -191,6 +197,12 @@ const startGame = function() {
 
 
   let playerScore = calcPoints(player.hand).total;
+
+  // check if player has 21
+  if(playerScore == 21) {
+    return (`Player has 21 points. Immediately win`);
+  }
+
   showHand(player);
   while (playerScore < 21 && rl.question(getMessage(playerScore, dealer.hand[0]))) {
     player.drawCard();
@@ -208,6 +220,12 @@ const startGame = function() {
   console.log(`Player stands at ${playerScore}`);
 
   let dealerScore = calcPoints(dealer.hand).total;
+
+    // check if dealer has 21
+    if(dealerScore == 21) {
+      return (`Dealer has 21 points. Immediately win`);
+    }
+
   while (dealerScore < 21 && dealerShouldDraw(dealer.hand)) {
     dealer.drawCard();
     dealerScore = calcPoints(dealer.hand).total;
