@@ -2,8 +2,53 @@
  * Returns an array of 52 Cards
  * @returns {Array} deck - a deck of cards
  */
-const getDeck = () => {
+ const getDeck = () => {
+  const suits = ['hearts', 'spades', 'clubs', 'diamonds'];
+  const cards = [];
 
+  for(let i = 0; i < suits.length; i++) {
+    for(let j = 1; j <= 13; j++) {
+      let val = "";
+      let valName = "";
+      let card;
+
+      switch(true) {
+        case j === 1:
+          valName = "Ace";
+          break;
+        case j > 1 && j <= 10:
+          valName = j;
+          val = j;
+          break;
+        case j == 11:
+          valName = "Jack";
+          val = 10;
+          break;
+        case j == 12:
+          valName = "Queen";
+          val = 10;
+          break;
+        case j == 13:
+          valName = "King";
+          val = 10;
+          break;
+        default:
+          break;
+      }
+      card = {
+        val: j,
+        displayVal: valName,
+        suit: suits[i],
+      };
+
+      if(valName === "Ace") {
+        card.val = 11;
+      }
+
+      cards.push(card);
+    }
+  }
+  return cards;
 }
 
 
